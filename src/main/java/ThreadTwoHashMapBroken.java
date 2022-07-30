@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class ThreadTwoHashMapBroken extends Thread {
-    HashMap<String, Thread> threadMap;
+    static HashMap<String, Thread> threadMap;
 
     public ThreadTwoHashMapBroken(String name) {
         super(name);
@@ -29,33 +29,39 @@ public class ThreadTwoHashMapBroken extends Thread {
 
     // Run this
     public static void main(String[] args){
-        ThreadTwoHashMapBroken tm = new ThreadTwoHashMapBroken(""+10);
+//        ThreadTwoHashMapBroken tm = new ThreadTwoHashMapBroken(""+10);
 
         // What's wrong with this idea??...
-        new Thread("Run of " + 6){
-            public void run(){
-                tm.runMapOfSize(6);
-            }
-        }.start();
-        new Thread("Run of " + 8){
-            public void run(){
-                tm.runMapOfSize(8);
-            }
-        }.start();
+//        new Thread("Run of " + 6){
+//            public void run(){
+//                tm.runMapOfSize(6);
+//            }
+//        }.start();
+//        new Thread("Run of " + 8){
+//            public void run(){
+//                tm.runMapOfSize(8);
+//            }
+//        }.start();
+//      runMapOfSize(6);
+      runMapOfSize(6);
+      runMapOfSize(8);
+
 
     }
 
-    private void runMapOfSize(int size) {
+    private static void runMapOfSize(int size) {
         System.out.println("Constructing HashMap of Size "+size);
         Integer threadCount = size;
+        HashMap<String, Thread> threadMap = new HashMap<>();
+
 
         for (int i = 0; i < threadCount; i++) {
-            this.threadMap.put("T"+ i, new ThreadTwoHashMapBroken("T"+ i));
+            /*this.*/threadMap.put("T"+ i, new ThreadTwoHashMapBroken("T"+ i));
         }
         System.out.println("Starting Threads in HashMap");
-        Set<String> names = this.threadMap.keySet();
+        Set<String> names = /*this.*/threadMap.keySet();
         for (String name : names) {
-            this.threadMap.get(name).start();
+            /*this.*/threadMap.get(name).start();
         }
         System.out.println("Thread HashMap, all have been started");
     }
